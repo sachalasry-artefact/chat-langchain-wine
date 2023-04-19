@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Your Data</title>
+    <title>ChatSommelier</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .chat-body {
@@ -51,7 +51,8 @@
         }
     </style>
     <script>
-        var endpoint = "ws://localhost:9000/chat";
+        var endpoint = "ws://localhost:8080/chat";
+        // var endpoint = "wss://wine-bot-f2wicmghha-ew.a.run.app/chat";
         var ws = new WebSocket(endpoint);
         // Receive message from server word by word. Display the words as they are received.
         ws.onmessage = function (event) {
@@ -64,12 +65,12 @@
                     var div = document.createElement('div');
                     div.className = 'server-message';
                     var p = document.createElement('p');
-                    p.innerHTML = "<strong>" + "Chatbot: " + "</strong>";
+                    p.innerHTML = "<strong>" + "ChatSommelier: " + "</strong>";
                     div.appendChild(p);
                     messages.appendChild(div);
                 } else if (data.type === "stream") {
                     var header = document.getElementById('header');
-                    header.innerHTML = "Chatbot is typing...";
+                    header.innerHTML = "ChatSommelier is typing...";
                     var p = messages.lastChild.lastChild;
                     if (data.message === "\n") {
                         p.innerHTML += "<br>";
@@ -81,13 +82,13 @@
                     header.innerHTML = data.message;
                 } else if (data.type === "end") {
                     var header = document.getElementById('header');
-                    header.innerHTML = "Ask a question";
+                    header.innerHTML = "Your personal sommelier is ready to answer your questions";
                     var button = document.getElementById('send');
                     button.innerHTML = "Send";
                     button.disabled = false;
                 } else if (data.type === "error") {
                     var header = document.getElementById('header');
-                    header.innerHTML = "Ask a question";
+                    header.innerHTML = "Your personal sommelier is ready to answer your questions";
                     var button = document.getElementById('send');
                     button.innerHTML = "Send";
                     button.disabled = false;
@@ -126,8 +127,8 @@
 <body class="bg-black">
     <div class="chat-body card">
         <div class="card-body p-5">
-            <h4 class="card-title text-center text-xl font-medium"> Chat Your Data </h4>
-            <p class="card-text text-center text-sm" id="header"> Ask a question </p>
+            <h4 class="card-title text-center text-xl font-medium"> ChatSommelier </h4>
+            <p class="card-text text-center text-sm" id="header"> Your personal sommelier is ready to answer your questions </p>
             <hr class="border-gray-500 mb-5" style="margin-top: 20px;">
             <div id="messages" class="overflow-auto" style="max-height: 500px;">
             </div>
